@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
+  gem 'faker', '~> 3.2'
   gem 'rubocop', '~> 1.57'
 end
 
