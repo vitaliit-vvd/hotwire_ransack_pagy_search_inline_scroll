@@ -1,14 +1,16 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<p style="color: green"><%= notice %></p>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Users</h1>
-    <%= link_to "New user", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-  </div>
+<h1>Users</h1>
 
-  <div id="users" class="min-w-full">
-    <%= render @users %>
-  </div>
-</div>
+<%= search_form_for @q, data: { turbo_frame: :results } do |f| %>
+  <%= f.label :first_name_or_last_name_or_email_cont %>
+  <%= f.search_field :first_name_or_last_name_or_email_cont,
+                     oninput: 'this.form.requestSubmit()', autofocus: true, autocomplete: 'off' %>
+<% end %>
+
+<%= turbo_frame_tag :results, data: { turbo_action: 'advance' } do %>
+  <div id="users"></div>
+  <%= turbo_frame_tag :pagination, loading: :lazy,
+                      src: users_path(format: :turbo_stream, q: params[:q]&.to_unsafe_h) %>
+
+<% end %>

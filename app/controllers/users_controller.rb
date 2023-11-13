@@ -5,7 +5,10 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    search_params = params.permit(:format, :page, q: [:first_name_or_last_name_or_email_cont])
+    @q = User.ransack(search_params[:q])
+    users = @q.result(distinct: true).order(created_at: :asc)
+    @pagy, @users = pagy_countless(users, items: 2)
   end
 
   # GET /users/1 or /users/1.json

@@ -40,6 +40,10 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem 'pagy', '~> 6.2'
+
+gem 'ransack', '~> 4.1'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'faker', '~> 3.2'
